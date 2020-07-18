@@ -1,0 +1,26 @@
+- defaults:
+    link:
+      create: true
+      relink: true
+
+- clean: ['~', '~/.config']
+
+- link:
+    ~/.bash_profile: .bash_profile
+    ~/.config/:
+      glob: true
+      path: .config/*
+      relink: true
+    ~/.tmux.conf: .tmux.conf
+    ~/.ripgreprc: .ripgreprc
+    ~/.pythonrc: .pythonrc
+    ~/.vim: .vim
+    ~/.vimrc: .vimrc
+    ~/.zshrc: .zshrc
+
+#- create:
+    #- ~/downloads
+    #- ~/.vim/undo-history
+
+- shell:
+  - [git submodule update --init --recursive, Installing submodules]
