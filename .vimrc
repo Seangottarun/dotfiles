@@ -1,8 +1,7 @@
-
 set nocompatible
 " Turn off Vi-compatibility mode and enable useful Vim functionality.
 
-" Install vim-plug
+" Install vim-plug (comment this out on Windows)
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
@@ -26,7 +25,7 @@ call plug#begin('~/.vim/plugged')
 " fuzzy finder fzf
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
-" If installed using Homebrew
+" If installed using Homebrew (comment out on Windows)
 Plug '/usr/local/opt/fzf'
 nmap <C-o> :Files<CR>
 nmap <C-f> :Rg<CR>
@@ -202,9 +201,24 @@ set pastetoggle=<F3>
 
 " Display invisible characters
 set listchars=eol:¬,tab:>·,trail:~,extends:>,precedes:<,space:␣
+" Windows version
+" set listchars=eol:$,tab:>-,trail:~,extends:>,precedes:
+
 
 " Toggle displayig invisible characters
 noremap <F5> :set list!<CR>
 inoremap <F5> <C-o>:set list!<CR>
 cnoremap <F5> <C-c>:set list!<CR>
+
+" Set vim to wrap text at 100 characters for markdown
+autocmd bufreadpre *.md setlocal textwidth=100
+
+" Set Indentation
+set smartindent
+set autoindent
+
+" Configure tab spaces
+set tabstop=4
+set shiftwidth=4
+set expandtab
 
