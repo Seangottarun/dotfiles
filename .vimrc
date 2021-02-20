@@ -1,224 +1,282 @@
-set nocompatible
-" Turn off Vi-compatibility mode and enable useful Vim functionality.
+" My Vim Configuration
+""""""""""""""
+"  Global Vim "
+""""""""""""""
 
-" Install vim-plug (comment this out on Windows)
+set nocompatible              " be iMproved, required
+filetype plugin on            " load plugin according to filetype
+
+""""""""""""""
+"  Plugins "
+""""""""""""""
+"" Vim-plug Installation
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
-" quicker window movement
-nmap <C-j> <C-w>j
-nmap <C-k> <C-w>k
-nmap <C-h> <C-w>h
-nmap <C-l> <C-w>l
-nmap <C-t> :tabn<CR>
-
-
-"---------------------
-" Plugin configuration
-"---------------------
-
+"" Install Plugins
 call plug#begin('~/.vim/plugged')
 
-" fuzzy finder fzf
-Plug 'junegunn/fzf'
-Plug 'junegunn/fzf.vim'
-" If installed using Homebrew (comment out on Windows)
-Plug '/usr/local/opt/fzf'
-nmap <C-o> :Files<CR>
-nmap <C-f> :Rg<CR>
-nmap <C-b> :Buffers<CR>
-nmap <C-s> :Snippets<CR>
-
-" nerdtree
+""" NerdTree file manager
 Plug 'preservim/nerdtree'
-nmap <C-n> :NERDTreeToggle<CR>
-
-" show hidden files by default
-let NERDTreeShowHidden=1
-
-" ignore specifc files
-let NERDTreeIgnore=['\.pyc$', '\~$', '\.swp$']
-
-Plug 'chriskempson/base16-vim'
-let base16colorspace=256  " Access colors present in 256 colorspace
-
+""" Vim-latex
+Plug 'vim-latex/vim-latex'
+""" Vimtex
+"Plug 'lervag/vimtex'
 """ UltiSnip Engine
 Plug 'SirVer/ultisnips'
+""" Gruvbox
+Plug 'jordanhong/gruvbox-material'
+""" Ctrl-p (fuzzy search, uninstalled by default)
+" Plug 'ctrlpvim/ctrlp.vim'
 
-" Trigger configuration. Do not use <tab> if you use
-" https://github.com/Valloric/YouCompleteMe.
+""" Vim Airline
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+""" Fugitive
+Plug 'tpope/vim-fugitive'
+
+""" ALE
+
+Plug 'dense-analysis/ale'
+call plug#end()
+
+"" Plug-in Settings
+
+""" NerdTree
+nmap <c-f> :NERDTreeToggle<CR>
+
+""" Vim-latex
+let g:Tex_CompileRule_pdf = 'pdflatex -synctex=1 --interaction=batchmode $*'
+let g:Tex_DefaultTargetFormat = 'pdf'
+if has('mac')
+    let g:Tex_ViewRule_pdf = 'open -a Skim'
+else
+    let g:Tex_ViewRule_pdf = 'zathura'
+endif
+let g:tex_flavor = 'latex'
+let g:Tex_Menus = 1
+let g:Tex_SmartKeyQuote=0
+""" Vimtex
+"Mac uses Skim, Ubuntu uses Zathura
+"let g:vimtex_view_method = 'skim'
+" Required for vim to recognized latex files
+"let g:tex_flavor = 'latex'
+"let g:tex_conceal='abdmg'
+" keep focus on vim after compiling
+"let g:vimtex_view_automatic = 0
+""" Ulti-snips
+" Trigger configuration.
+"let g:UltiSnipsExpandTrigger="<tab>"
+"let g:UltiSnipsJumpForwardTrigger="<c-b>"
+" Need to remap jump forward from <c-j> to <c-b>, since the former interferes
+" with latex-suite
+"let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+"let g:UltiSnipsEditSplit="vertical" "Split ultisnipedit vertically
+
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<C-tab>"
+"let g:UltiSnipsEditSplit="vertical" "Split ultisnipedit vertically
 let g:UltiSnipsSnippetDirectories=[$HOME.'/.vim/UltiSnips']
-let g:UltiSnipsUsePythonVersion = 3
+"let g:UltiSnipsUsePythonVersion = 3
+""" Gruvbox material
+colorscheme gruvbox-material
+if exists('+termguicolors')
+    set termguicolors
+endif
+let g:gruvbox_material_enable_bold = 1
+if has('mac')
+    set background=light
+    let g:gruvbox_material_disable_italic_comment = 1
+else
+    set background=dark
+endif
+""" Vim Airline
+:let g:airline_theme='gruvbox_material'
+if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+endif
 
-" ale
-Plug 'dense-analysis/ale'
-" Moves to next error/warning
-nmap <C-e> <Plug>(ale_next_wrap)
+" unicode symbols
+let g:airline_left_sep = '»'
+let g:airline_left_sep = '▶'
+let g:airline_right_sep = '«'
+let g:airline_right_sep = '◀'
+let g:airline_symbols.crypt = '🔒'
+let g:airline_symbols.linenr = '☰'
+let g:airline_symbols.linenr = '␊'
+let g:airline_symbols.linenr = '␤'
+let g:airline_symbols.linenr = '¶'
+let g:airline_symbols.maxlinenr = ''
+let g:airline_symbols.maxlinenr = '㏑'
+let g:airline_symbols.branch = '⎇'
+let g:airline_symbols.paste = 'ρ'
+let g:airline_symbols.paste = 'Þ'
+let g:airline_symbols.paste = '∥'
+let g:airline_symbols.spell = 'Ꞩ'
+let g:airline_symbols.notexists = 'Ɇ'
+let g:airline_symbols.whitespace = 'Ξ'
 
-" Toggle ALE quick list
-noremap <C-i> :call QFixToggle()<CR>
+""" Ctrl-P
+let g:ctrlp_arg_map = 1
+let g:hardtime_ignore_buffer_patterns = [ "CustomPatt[ae]rn", "NERD.*" ]
+""" ALE
+let g:ale_fixers = {
+            \   '*': ['remove_trailing_lines', 'trim_whitespace']
+            \}
+"Plug 'vhda/verilog_systemverilog.vim'
+""""""""""""""
+"  General Settings  "
+""""""""""""""
+"" Status Bar
+""" Show command
+"Show what command is being typed
+:set showcmd
 
-function! QFixToggle()
-  if exists("g:qfix_win")
-    cclose
-    unlet g:qfix_win
+"" Syntax
+""" Indentation
+"Set smart indent
+:set smartindent
+:set autoindent
+
+""" Syntax Highlight
+:syntax on
+
+""" Configure tab spaces
+:set tabstop=4
+:set shiftwidth=4
+:set expandtab
+
+""" Writing
+" Enable latex and markdown files
+autocmd FileType tex,markdown,text set spell
+" Set word wrapping (not working yet): prevent words from splitting off a line
+:set wrap
+
+"" Sessions
+""" Update Session
+:nmap <F2> :wa<Bar>exe "mksession! " . v:this_session<CR>
+"" File navigation
+""" Folding
+" Enable fold by syntax for C
+autocmd FileType c,cpp  set foldmethod=syntax
+"" Save folding state
+:nmap <F3> :mkview<CR>
+:nmap <F4> :loadview<CR>
+:nmap <F5> zfa(
+"" File navigation
+""" Searching
+" Set highlight search
+:set hls
+" Set increment highlight matches
+:set incsearch
+" Clears highlight of search when Enter.
+" remap enter after search to clear highlight, then clears command.
+nnoremap <silent> <cr> :noh<CR>
+
+""" Wild menu
+" Set wildmenu (shows completion list bar)
+set wildmenu
+""" Line number
+"Toggle number at ctrl-l
+"Hybrid: shows current abs number and relative
+"see: :h number_relativenumber
+"Show numbers by default
+set number! relativenumber!
+nmap <c-l> :set number! relativenumber!<CR>
+set number relativenumber
+""" Tags
+map <C-\> :bel vert winc ]<CR>
+
+" HOW TO USE TAGS:
+    "Ctrl+] - go to definition
+    "Ctrl+T - Jump back from the definition.
+    "Ctrl+O - Jump to last place; Ctrl+I to reverse
+    "Ctrl+W Ctrl+] - Open the definition in a horizontal split
+    "Ctrl+\ - Open the definition in a vertical to the right (self-defined)
+
+    "Ctrl+W } : Opens a preview window with the location of the tag definition. The cursor does not change its position, so tag stack is not updated.
+    "Ctrl+W Z : Close preview window.
+    "Ctrl+W V : Split current window in two, keeping the cursor position.
+
+"So, you can use <c-w>}if you want to quickly check the tag declaration, followed by <c-w>z to close it. But if you want to navigate, then you can simply use <c-w>v to create a split followed by the standard <c-] to navigate in the tags. When you're done with it, you can simply close the window with <c-w>c.
+
+""" Mouse support
+set mouse+=a
+
+"" Backup
+" Turn on backup to store in file.ext.bak
+set backup
+set backupext=.bak
+
+"" Ctags shortcuts
+command! Maketag !ctags -R .
+set shortmess=a
+
+"" Autocomplete
+" by default, dashes ('-') aren't included in C-n C-p autocomplete
+set iskeyword+=\-   "sets to recognize dashes
+""""""""""""""""""""""""
+"  Vimrc Organization  "
+""""""""""""""""""""""""
+"" Autofolding .vimrc
+" see http://vimcasts.org/episodes/writing-a-custom-fold-expression/
+""" defines a foldlevel for each line of code
+function! VimFolds(lnum)
+  let s:thisline = getline(a:lnum)
+  if match(s:thisline, '^"" ') >= 0
+    return '>2'
+  endif
+  if match(s:thisline, '^""" ') >= 0
+    return '>3'
+  endif
+  let s:two_following_lines = 0
+  if line(a:lnum) + 2 <= line('$')
+    let s:line_1_after = getline(a:lnum+1)
+    let s:line_2_after = getline(a:lnum+2)
+    let s:two_following_lines = 1
+  endif
+  if !s:two_following_lines
+      return '='
+    endif
   else
-    copen 10
-    let g:qfix_win = bufnr("$")
+    if (match(s:thisline, '^"""""') >= 0) &&
+       \ (match(s:line_1_after, '^"  ') >= 0) &&
+       \ (match(s:line_2_after, '^""""') >= 0)
+      return '>1'
+    else
+      return '='
+    endif
   endif
 endfunction
 
-
-function ALE() abort
-    return exists('*ALEGetStatusLine') ? ALEGetStatusLine() : ''
+""" defines a foldtext
+function! VimFoldText()
+  " handle special case of normal comment first
+  let s:info = '('.string(v:foldend-v:foldstart).' l)'
+  if v:foldlevel == 1
+    let s:line = ' ◇ '.getline(v:foldstart+1)[3:-2]
+  elseif v:foldlevel == 2
+    let s:line = '   ●  '.getline(v:foldstart)[3:]
+  elseif v:foldlevel == 3
+    let s:line = '     ▪ '.getline(v:foldstart)[4:]
+  endif
+  if strwidth(s:line) > 80 - len(s:info) - 3
+    return s:line[:79-len(s:info)-3+len(s:line)-strwidth(s:line)].'...'.s:info
+  else
+    return s:line.repeat(' ', 80 - strwidth(s:line) - len(s:info)).s:info
+  endif
 endfunction
-let g:airline_section_error = '%{ALE()}'
 
-let g:ale_lint_on_enter = 0
-let g:ale_lint_on_save = 1
-
-" Enable completion where available.
-" This setting must be set before ALE is loaded.
-"
-" You should not turn this setting on if you wish to use ALE as a completion
-" source for other completion plugins, like Deoplete.
-let g:ale_completion_enabled = 1
-
-"ALE provides an omni-completion function you can use for triggering completion
-" manually with <C-x><C-o>.
-
-set omnifunc=ale#completion#OmniFunc
-
-let g:ale_sign_column_always = 1
-
-let g:ale_fixers = {'tex': ['latexindent']}
-
-
-" argwrap
-"Plug 'FooSoft/vim-argwrap'
-"nnoremap <C-w> :ArgWrap<CR>
-
-" airline
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-let g:airline_theme='base16'
-
-" mundo
-Plug 'simnalamburt/vim-mundo'
-" Enable persistent undo so that undo history persists across vim sessions
-set undofile
-set undodir=~/.vim/undo
-nnoremap <C-u> :MundoToggle<CR>
-
-let g:mundo_width = 60
-let g:mundo_preview_height = 40
-let g:mundo_right = 1
-
-
-" vim-tex
-Plug 'lervag/vimtex'
-"-----configure pdf application---------------------------
-"Mac uses Skim, Ubuntu uses Zathura
-let g:vimtex_view_method = 'skim'
-" Required for vim to recognized latex files
-let g:tex_flavor = 'latex'
-let g:tex_conceal='abdmg'
-" keep focus on vim after compiling
-let g:vimtex_view_automatic = 0
-
-call plug#end()
-
-" Automatically install missing plugins on startup
-autocmd VimEnter *
-  \  if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
-  \|   PlugInstall --sync | q
-  \| endif
-
-" Turn on syntax highlighting.
-syntax on
-
-set showmatch " show matching braces when text indicator is over them
-
-" Disable the default Vim startup message.
-set shortmess+=I
-
-" Show line numbers.
-set number
-
-" This enables relative line numbering mode. With both number and
-" relativenumber enabled, the current line shows the true line number, while
-" all other lines (above and below) are numbered relative to the current line.
-" This is useful because you can tell, at a glance, what count is needed to
-" jump up or down to a particular line, by {count}k to go up or {count}j to go
-" down.
-set relativenumber
-
-" Always show the status line at the bottom, even if you only have one window open.
-set laststatus=2
-
-" The backspace key has slightly unintuitive behaviour by default. For example,
-" by default, you can't backspace before the insertion point set with 'i'.
-" This configuration makes backspace behave more reasonably, in that you can
-" backspace over anything.
-set backspace=indent,eol,start
-
-" By default, Vim doesn't let you hide a buffer (i.e. have a buffer that isn't
-" shown in any window) that has unsaved changes. This is to prevent you from "
-" forgetting about unsaved changes and then quitting e.g. via `:qa!`. We find
-" hidden buffers helpful enough to disable this protection. See `:help hidden`
-" for more information on this.
-set hidden
-
-" This setting makes search case-insensitive when all characters in the string
-" being searched are lowercase. However, the search becomes case-sensitive if
-" it contains any capital letters. This makes searching more convenient.
-set ignorecase
-set smartcase
-
-" Enable searching as you type, rather than waiting till you press enter.
-set incsearch
-
-" Unbind some useless/annoying default key bindings.
-nmap Q <Nop> " 'Q' in normal mode enters Ex mode. You almost never want this.
-
-" Disable audible bell because it's annoying.
-set noerrorbells visualbell t_vb=
-
-" Enable mouse support.
-set mouse+=a
-
-" Enable copying to clipboard (y and dd)
-set clipboard+=unnamed 
-
-" Toggle indentation when pasting text
-set pastetoggle=<F3>
-
-" Display invisible characters
-set listchars=eol:¬,tab:>·,trail:~,extends:>,precedes:<,space:␣
-" Windows version
-" set listchars=eol:$,tab:>-,trail:~,extends:>,precedes:
-
-
-" Toggle displayig invisible characters
-noremap <F5> :set list!<CR>
-inoremap <F5> <C-o>:set list!<CR>
-cnoremap <F5> <C-c>:set list!<CR>
-
-" Set vim to wrap text at 100 characters for markdown
-autocmd bufreadpre *.md setlocal textwidth=100
-
-" Set Indentation
-set smartindent
-set autoindent
-
-" Configure tab spaces
-set tabstop=4
-set shiftwidth=4
-set expandtab
-
+""" set foldsettings automatically for vim files
+augroup fold_vimrc
+  autocmd!
+  autocmd FileType vim
+                   \ setlocal foldmethod=expr |
+                   \ setlocal foldexpr=VimFolds(v:lnum) |
+                   \ setlocal foldtext=VimFoldText() |
+     "              \ set foldcolumn=2 foldminlines=2
+augroup END
