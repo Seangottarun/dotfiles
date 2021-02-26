@@ -41,7 +41,14 @@ Plug 'tpope/vim-fugitive'
 """ ALE
 
 Plug 'dense-analysis/ale'
+
+""" textobj-latex
+
+Plug 'kana/vim-textobj-user'
+Plug 'rbonvall/vim-textobj-latex'
+
 call plug#end()
+
 
 "" Plug-in Settings
 
@@ -49,7 +56,8 @@ call plug#end()
 nmap <c-f> :NERDTreeToggle<CR>
 
 """ Vim-latex
-let g:Tex_CompileRule_pdf = 'pdflatex -synctex=1 --interaction=batchmode $*'
+"let g:Tex_CompileRule_pdf = 'pdflatex -synctex=1 --interaction=batchmode $*'
+let g:Tex_CompileRule_pdf = 'pdflatex -interaction=nonstopmode -file-line-error-style $*'
 let g:Tex_DefaultTargetFormat = 'pdf'
 if has('mac')
     let g:Tex_ViewRule_pdf = 'open -a Skim'
