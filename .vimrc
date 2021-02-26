@@ -132,9 +132,15 @@ let g:airline_symbols.whitespace = 'Ξ'
 let g:ctrlp_arg_map = 1
 let g:hardtime_ignore_buffer_patterns = [ "CustomPatt[ae]rn", "NERD.*" ]
 """ ALE
+noremap <F8> <ESC> :ALEFix <cr>
+noremap! <F8> <ESC> :ALEFix <cr>
 let g:ale_fixers = {
-            \   '*': ['remove_trailing_lines', 'trim_whitespace']
+            \   '*': ['remove_trailing_lines', 'trim_whitespace'],
+            \   'c': ['clang-format'], 
+            \   'cpp': ['clang-format'] 
             \}
+let g:ale_c_clangformat_options = '-style="{IndentWidth: 4}"'
+
 "Plug 'vhda/verilog_systemverilog.vim'
 """"""""""""""
 "  General Settings  "
@@ -221,7 +227,13 @@ set backup
 set backupext=.bak
 
 "" Ctags shortcuts
-command! Maketag !ctags -R .
+"command! Maketag !ctags -R .
+command! Maketag !ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .
+"command! Maketag !ctags --extra=+pf -R .
+"command! Maketag !ctags -R . --c++-kinds=+pf --fields=+imaSft --extras=+q
+"command! Maketag !ctags -R . --c++-kinds=+pf --fields=+imaSft --extra=+q
+set tags=tags;/
+set autochdir
 set shortmess=a
 
 "" Autocomplete
