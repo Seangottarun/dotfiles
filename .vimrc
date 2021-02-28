@@ -47,6 +47,9 @@ Plug 'dense-analysis/ale'
 Plug 'kana/vim-textobj-user'
 Plug 'rbonvall/vim-textobj-latex'
 
+""" commentary.vim
+Plug 'tpope/vim-commentary'
+
 call plug#end()
 
 
