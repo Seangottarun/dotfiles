@@ -179,7 +179,8 @@ autocmd FileType tex,markdown,text set spell
 "" File navigation
 """ Folding
 " Enable fold by syntax for C
-autocmd FileType c,cpp  set foldmethod=syntax
+autocmd FileType c,cpp set foldmethod=syntax
+autocmd FileType python set foldmethod=indent
 "" Save folding state
 :nmap <F3> :mkview<CR>
 :nmap <F4> :loadview<CR>
