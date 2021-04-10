@@ -47,6 +47,10 @@ Plug 'dense-analysis/ale'
 Plug 'kana/vim-textobj-user'
 Plug 'rbonvall/vim-textobj-latex'
 
+""" fzf.vim
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+
 """ commentary.vim
 Plug 'tpope/vim-commentary'
 
