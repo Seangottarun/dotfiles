@@ -170,6 +170,9 @@ let g:ale_c_clangformat_options = '-style="{IndentWidth: 4}"'
 "Show what command is being typed
 :set showcmd
 
+" Clipboard
+set clipboard=unnamed
+
 "" Syntax
 """ Indentation
 "Set smart indent
