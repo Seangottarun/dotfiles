@@ -10,10 +10,12 @@ filetype plugin on            " load plugin according to filetype
 "  Plugins "
 """"""""""""""
 "" Vim-plug Installation
-if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+if !has('win32')
+  if empty(glob('~/.vim/autoload/plug.vim'))
+    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs    
+      \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+  endif
 endif
 
 "" Install Plugins
@@ -26,7 +28,10 @@ Plug 'vim-latex/vim-latex'
 """ Vimtex
 "Plug 'lervag/vimtex'
 """ UltiSnip Engine
-Plug 'SirVer/ultisnips'
+if !has('win32')
+    Plug 'SirVer/ultisnips'
+endif
+
 """ Gruvbox
 Plug 'jordanhong/gruvbox-material'
 """ Ctrl-p (fuzzy search, uninstalled by default)
@@ -85,21 +90,26 @@ let g:Tex_SmartKeyQuote=0
 "let g:tex_conceal='abdmg'
 " keep focus on vim after compiling
 "let g:vimtex_view_automatic = 0
-""" Ulti-snips
-" Trigger configuration.
-"let g:UltiSnipsExpandTrigger="<tab>"
-"let g:UltiSnipsJumpForwardTrigger="<c-b>"
-" Need to remap jump forward from <c-j> to <c-b>, since the former interferes
-" with latex-suite
-"let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-"let g:UltiSnipsEditSplit="vertical" "Split ultisnipedit vertically
 
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<C-tab>"
-"let g:UltiSnipsEditSplit="vertical" "Split ultisnipedit vertically
-let g:UltiSnipsSnippetDirectories=[$HOME.'/.vim/UltiSnips']
-"let g:UltiSnipsUsePythonVersion = 3
+""" Ulti-snips
+if !has('win32')
+" Trigger configuration.
+    "let g:UltiSnipsExpandTrigger="<tab>"
+    "let g:UltiSnipsJumpForwardTrigger="<c-b>"
+    " Need to remap jump forward from <c-j> to <c-b>, since the former interferes
+    " with latex-suite
+
+    "let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+    "let g:UltiSnipsEditSplit="vertical" "Split ultisnipedit vertically
+
+    let g:UltiSnipsExpandTrigger="<tab>"
+    let g:UltiSnipsJumpForwardTrigger="<tab>"
+    let g:UltiSnipsJumpBackwardTrigger="<C-tab>"
+    "let g:UltiSnipsEditSplit="vertical" "Split ultisnipedit vertically
+    let g:UltiSnipsSnippetDirectories=[$HOME.'/.vim/UltiSnips']
+    "let g:UltiSnipsUsePythonVersion = 3
+endif
+
 """ Gruvbox material
 colorscheme gruvbox-material
 if exists('+termguicolors')
