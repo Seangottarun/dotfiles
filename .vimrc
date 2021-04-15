@@ -180,6 +180,10 @@ autocmd FileType tex,markdown,text set spell
 " Set word wrapping (not working yet): prevent words from splitting off a line
 :set wrap
 
+""" File Encoding
+set encoding=utf-8
+:set fileencodings=utf-8
+
 "" Sessions
 """ Update Session
 :nmap <F2> :wa<Bar>exe "mksession! " . v:this_session<CR>
