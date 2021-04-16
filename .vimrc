@@ -157,7 +157,8 @@ noremap! <F8> <ESC> :ALEFix <cr>
 let g:ale_fixers = {
             \   '*': ['remove_trailing_lines', 'trim_whitespace'],
             \   'c': ['clang-format'],
-            \   'cpp': ['clang-format']
+            \   'cpp': ['clang-format'],
+            \   'tex': ['latexindent']
             \}
 let g:ale_c_clangformat_options = '-style="{IndentWidth: 4}"'
 
