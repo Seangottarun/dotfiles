@@ -197,6 +197,11 @@ autocmd FileType tex,markdown,text set spell
 set encoding=utf-8
 :set fileencodings=utf-8
 
+""" Backspace
+if has('win32')
+    set backspace=indent,eol,start
+endif
+
 "" Sessions
 """ Update Session
 :nmap <F2> :wa<Bar>exe "mksession! " . v:this_session<CR>
