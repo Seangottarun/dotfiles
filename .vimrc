@@ -42,6 +42,11 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 """ Fugitive
 Plug 'tpope/vim-fugitive'
+" fugitive plugin for GitHub (:GBrowse for opening GitHub URLs)
+Plug 'tpope/vim-rhubarb'
+
+""" vim-gitgutter
+Plug 'airblade/vim-gitgutter'
 
 """ ALE
 
@@ -161,6 +166,10 @@ let g:ale_fixers = {
             \   'tex': ['latexindent']
             \}
 let g:ale_c_clangformat_options = '-style="{IndentWidth: 4}"'
+
+""" vim-gitgutter
+" 100 ms update time so that signs change faster than default 4000ms
+set updatetime=100
 
 "Plug 'vhda/verilog_systemverilog.vim'
 """"""""""""""
