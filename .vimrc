@@ -5,6 +5,7 @@
 
 set nocompatible              " be iMproved, required
 filetype plugin on            " load plugin according to filetype
+let workmode=1
 
 """"""""""""""
 "  Plugins "
@@ -23,23 +24,11 @@ call plug#begin('~/.vim/plugged')
 
 """ NerdTree file manager
 Plug 'preservim/nerdtree'
-""" Vim-latex
-Plug 'vim-latex/vim-latex'
-""" Vimtex
-"Plug 'lervag/vimtex'
-""" UltiSnip Engine
-if !has('win32')
-    Plug 'SirVer/ultisnips'
-endif
-
-""" Gruvbox
-Plug 'jordanhong/gruvbox-material'
-""" Ctrl-p (fuzzy search, uninstalled by default)
-" Plug 'ctrlpvim/ctrlp.vim'
 
 """ Vim Airline
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+
 """ Fugitive
 Plug 'tpope/vim-fugitive'
 " fugitive plugin for GitHub (:GBrowse for opening GitHub URLs)
@@ -47,15 +36,6 @@ Plug 'tpope/vim-rhubarb'
 
 """ vim-gitgutter
 Plug 'airblade/vim-gitgutter'
-
-""" ALE
-
-Plug 'dense-analysis/ale'
-
-""" textobj-latex
-
-Plug 'kana/vim-textobj-user'
-Plug 'rbonvall/vim-textobj-latex'
 
 """ vim-pythonsense
 Plug 'jeetsukumaran/vim-pythonsense'
@@ -67,11 +47,38 @@ Plug 'junegunn/fzf.vim'
 """ commentary.vim
 Plug 'tpope/vim-commentary'
 
+""" Verilog/SystemVerilog
+Plug 'vhda/verilog_systemverilog.vim'
+
+if !workmode
+    """ Vim-latex
+    Plug 'vim-latex/vim-latex'
+    
+    """ Vimtex
+    "Plug 'lervag/vimtex'
+    """ UltiSnip Engine
+    if !has('win32')
+        Plug 'SirVer/ultisnips'
+    endif
+
+    """ Gruvbox
+    Plug 'jordanhong/gruvbox-material'
+    
+    """ Ctrl-p (fuzzy search, uninstalled by default)
+    " Plug 'ctrlpvim/ctrlp.vim'
+
+    """ ALE
+    Plug 'dense-analysis/ale'
+
+    """ textobj-latex
+    Plug 'kana/vim-textobj-user'
+    Plug 'rbonvall/vim-textobj-latex'
+endif
+
 call plug#end()
 
 
 "" Plug-in Settings
-
 """ NerdTree
 nmap <c-f> :NERDTreeToggle<CR>
 
@@ -87,6 +94,7 @@ endif
 let g:tex_flavor = 'latex'
 let g:Tex_Menus = 1
 let g:Tex_SmartKeyQuote=0
+
 """ Vimtex
 "Mac uses Skim, Ubuntu uses Zathura
 "let g:vimtex_view_method = 'skim'
@@ -116,19 +124,34 @@ if !has('win32')
 endif
 
 """ Gruvbox material
-colorscheme gruvbox-material
 if exists('+termguicolors')
     set termguicolors
 endif
-let g:gruvbox_material_enable_bold = 1
+if !workmode
+    let g:gruvbox_material_enable_bold = 1
+endif
 if has('mac')
     set background=light
-    let g:gruvbox_material_disable_italic_comment = 1
+    if !workmode
+        let g:gruvbox_material_disable_italic_comment = 1
+    endif
 else
-    set background=dark
+    if workmode
+        set background=light
+    else
+        set background=dark
+    endif
 endif
+if !workmode
+    colorscheme gruvbox-material
+endif
+
 """ Vim Airline
-:let g:airline_theme='gruvbox_material'
+if workmode
+    let g:airline_theme='minimalist'
+else
+    let g:airline_theme='gruvbox_material'
+endif
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
 endif
@@ -154,8 +177,9 @@ let g:airline_symbols.notexists = 'Ɇ'
 let g:airline_symbols.whitespace = 'Ξ'
 
 """ Ctrl-P
-let g:ctrlp_arg_map = 1
-let g:hardtime_ignore_buffer_patterns = [ "CustomPatt[ae]rn", "NERD.*" ]
+" let g:ctrlp_arg_map = 1
+" let g:hardtime_ignore_buffer_patterns = [ "CustomPatt[ae]rn", "NERD.*" ]
+
 """ ALE
 noremap <F8> <ESC> :ALEFix <cr>
 noremap! <F8> <ESC> :ALEFix <cr>
@@ -171,7 +195,6 @@ let g:ale_c_clangformat_options = '-style="{IndentWidth: 4}"'
 " 100 ms update time so that signs change faster than default 4000ms
 set updatetime=100
 
-"Plug 'vhda/verilog_systemverilog.vim'
 """"""""""""""
 "  General Settings  "
 """"""""""""""
