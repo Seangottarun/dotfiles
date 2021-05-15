@@ -57,9 +57,7 @@ if !workmode
     """ Vimtex
     "Plug 'lervag/vimtex'
     """ UltiSnip Engine
-    if !has('win32')
-        Plug 'SirVer/ultisnips'
-    endif
+    Plug 'SirVer/ultisnips'
 
     """ Gruvbox
     Plug 'jordanhong/gruvbox-material'
@@ -120,6 +118,10 @@ if !has('win32')
     let g:UltiSnipsJumpBackwardTrigger="<C-tab>"
     "let g:UltiSnipsEditSplit="vertical" "Split ultisnipedit vertically
     let g:UltiSnipsSnippetDirectories=[$HOME.'/.vim/UltiSnips']
+    " This doesn't seem to work on Windows for some reason.
+    " Use UltiSnipsEdit to find the default location to put the snippets dir.
+    " You can also check currently loaded snippets with 
+    " :echo " UltiSnips#SnippetsInCurrentScope()
     "let g:UltiSnipsUsePythonVersion = 3
 endif
 
@@ -305,6 +307,13 @@ set shortmess=a
 "" Autocomplete
 " by default, dashes ('-') aren't included in C-n C-p autocomplete
 set iskeyword+=\-   "sets to recognize dashes
+
+"" Python path
+" Check for python dynamic support with :echo has("python3_dynamic").
+" If using pyenv, do pyenv which python to find python home and dll.
+" set pythonthreehome=C:\randomplace\python
+" set pythonthreedll=C:\randomplace\python\python38.dll
+
 """"""""""""""""""""""""
 "  Vimrc Organization  "
 """"""""""""""""""""""""
