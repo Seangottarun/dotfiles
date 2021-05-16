@@ -5,7 +5,8 @@
 
 set nocompatible              " be iMproved, required
 filetype plugin on            " load plugin according to filetype
-let workmode=1
+" let workmode=1                " only load work safe plugins
+let workmode=0
 
 """"""""""""""
 "  Plugins "
@@ -208,6 +209,9 @@ let g:tex_conceal_frac=1
 " Clipboard
 set clipboard=unnamed
 
+"" Mute bell
+set belloff=all
+
 "" Syntax
 """ Indentation
 "Set smart indent
@@ -224,9 +228,13 @@ set clipboard=unnamed
 
 """ Writing
 " Enable latex and markdown files
-autocmd FileType tex,markdown,text set spell
-" Set word wrapping (not working yet): prevent words from splitting off a line
-:set wrap
+" autocmd FileType tex,markdown,text set spell
+set spell spelllang=en_ca
+set spell
+
+" Set word wrapping: prevent words from splitting off a line
+set wrap
+set textwidth=80
 
 """ File Encoding
 set encoding=utf-8
@@ -240,16 +248,14 @@ endif
 "" Sessions
 """ Update Session
 :nmap <F2> :wa<Bar>exe "mksession! " . v:this_session<CR>
+
 "" File navigation
 """ Folding
-" Enable fold by syntax for C
-autocmd FileType c,cpp set foldmethod=syntax
-autocmd FileType python set foldmethod=indent
 "" Save folding state
 :nmap <F3> :mkview<CR>
 :nmap <F4> :loadview<CR>
 :nmap <F5> zfa(
-"" File navigation
+
 """ Searching
 " Set highlight search
 :set hls
@@ -262,6 +268,7 @@ nnoremap <silent> <cr> :noh<CR>
 """ Wild menu
 " Set wildmenu (shows completion list bar)
 set wildmenu
+
 """ Line number
 "Toggle number at ctrl-l
 "Hybrid: shows current abs number and relative
@@ -270,6 +277,7 @@ set wildmenu
 set number! relativenumber!
 nmap <c-l> :set number! relativenumber!<CR>
 set number relativenumber
+
 """ Tags
 map <C-\> :bel vert winc ]<CR>
 
