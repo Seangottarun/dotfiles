@@ -55,6 +55,9 @@ Plug 'vhda/verilog_systemverilog.vim'
 " Run :StripWhitespace on entire file or visual selection
 Plug 'ntpeters/vim-better-whitespace'
 
+""" Tagbar class outline viewer for Vim using tags
+Plug 'preservim/tagbar'
+
 if !workmode
     """ Vim-latex
     Plug 'vim-latex/vim-latex'
@@ -201,6 +204,9 @@ set updatetime=100
 set conceallevel=2
 let g:tex_conceal='abdmg'
 let g:tex_conceal_frac=1
+
+""" tagbar
+nmap <c-g> :TagbarToggle<CR>
 
 """"""""""""""
 "  General Settings  "
