@@ -212,6 +212,9 @@ let g:tex_conceal_frac=1
 """ tagbar
 nmap <c-g> :TagbarToggle<CR>
 
+""" Verilog/SystemVerilog
+let g:verilog_syntax_fold_lst = "all"
+
 """"""""""""""
 "  General Settings  "
 """"""""""""""
