@@ -14,7 +14,7 @@ let workmode=0
 "" Vim-plug Installation
 if !has('win32')
   if empty(glob('~/.vim/autoload/plug.vim'))
-    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs    
+    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
       \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
     autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
   endif
@@ -51,10 +51,14 @@ Plug 'tpope/vim-commentary'
 """ Verilog/SystemVerilog
 Plug 'vhda/verilog_systemverilog.vim'
 
+""" vim-better-whitespace.vim
+" Run :StripWhitespace on entire file or visual selection
+Plug 'ntpeters/vim-better-whitespace'
+
 if !workmode
     """ Vim-latex
     Plug 'vim-latex/vim-latex'
-    
+
     """ Vimtex
     "Plug 'lervag/vimtex'
     """ UltiSnip Engine
@@ -62,7 +66,7 @@ if !workmode
 
     """ Gruvbox
     Plug 'jordanhong/gruvbox-material'
-    
+
     """ Ctrl-p (fuzzy search, uninstalled by default)
     " Plug 'ctrlpvim/ctrlp.vim'
 
@@ -117,7 +121,7 @@ let g:UltiSnipsListSnippets="<c-h>"
 "let g:UltiSnipsEditSplit="vertical" "Split ultisnipedit vertically
 let g:UltiSnipsSnippetDirectories=[$HOME.'/.vim/UltiSnips']
 " If needed, use UltiSnipsEdit to find the default location to put the snippets dir.
-" You can also check currently loaded snippets with 
+" You can also check currently loaded snippets with
 " :echo " UltiSnips#SnippetsInCurrentScope()
 "let g:UltiSnipsUsePythonVersion = 3
 
