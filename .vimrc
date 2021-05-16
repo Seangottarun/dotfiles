@@ -71,6 +71,9 @@ if !workmode
     """ textobj-latex
     Plug 'kana/vim-textobj-user'
     Plug 'rbonvall/vim-textobj-latex'
+
+    """ tex-conceal
+    Plug 'KeitaNakamura/tex-conceal.vim', {'for': 'tex'}
 endif
 
 call plug#end()
@@ -188,6 +191,11 @@ let g:ale_c_clangformat_options = '-style="{IndentWidth: 4}"'
 """ vim-gitgutter
 " 100 ms update time so that signs change faster than default 4000ms
 set updatetime=100
+
+""" tex-conceal
+set conceallevel=2
+let g:tex_conceal='abdmg'
+let g:tex_conceal_frac=1
 
 """"""""""""""
 "  General Settings  "
