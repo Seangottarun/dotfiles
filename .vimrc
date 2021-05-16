@@ -58,6 +58,10 @@ Plug 'ntpeters/vim-better-whitespace'
 """ Tagbar class outline viewer for Vim using tags
 Plug 'preservim/tagbar'
 
+""" hl_matchit.vim
+" Automatically highlights underlining matching words
+Plug 'vimtaku/hl_matchit.vim'
+
 if !workmode
     """ Vim-latex
     Plug 'vim-latex/vim-latex'
@@ -260,6 +264,9 @@ endif
 nmap <F2> :wa<Bar>exe "mksession! " . v:this_session<CR>
 
 "" File navigation
+""" matchit (jump between keywords using %)
+runtime macros/matchit.vim
+
 """ Folding
 "" Save folding state
 nmap <F3> :mkview<CR>
