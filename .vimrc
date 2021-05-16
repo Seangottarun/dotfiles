@@ -103,27 +103,19 @@ let g:Tex_SmartKeyQuote=0
 "let g:vimtex_view_automatic = 0
 
 """ Ulti-snips
-if !has('win32')
 " Trigger configuration.
-    "let g:UltiSnipsExpandTrigger="<tab>"
-    "let g:UltiSnipsJumpForwardTrigger="<c-b>"
-    " Need to remap jump forward from <c-j> to <c-b>, since the former interferes
-    " with latex-suite
+" Defaults:
+" let g:UltiSnipsExpandTrigger="<tab>"
+" let g:UltiSnipsJumpForwardTrigger="<C-j>"
+" let g:UltiSnipsJumpBackwardTrigger="<C-k>"
 
-    "let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-    "let g:UltiSnipsEditSplit="vertical" "Split ultisnipedit vertically
-
-    let g:UltiSnipsExpandTrigger="<tab>"
-    let g:UltiSnipsJumpForwardTrigger="<tab>"
-    let g:UltiSnipsJumpBackwardTrigger="<C-tab>"
-    "let g:UltiSnipsEditSplit="vertical" "Split ultisnipedit vertically
-    let g:UltiSnipsSnippetDirectories=[$HOME.'/.vim/UltiSnips']
-    " This doesn't seem to work on Windows for some reason.
-    " Use UltiSnipsEdit to find the default location to put the snippets dir.
-    " You can also check currently loaded snippets with 
-    " :echo " UltiSnips#SnippetsInCurrentScope()
-    "let g:UltiSnipsUsePythonVersion = 3
-endif
+let g:UltiSnipsListSnippets="<c-h>"
+"let g:UltiSnipsEditSplit="vertical" "Split ultisnipedit vertically
+let g:UltiSnipsSnippetDirectories=[$HOME.'/.vim/UltiSnips']
+" If needed, use UltiSnipsEdit to find the default location to put the snippets dir.
+" You can also check currently loaded snippets with 
+" :echo " UltiSnips#SnippetsInCurrentScope()
+"let g:UltiSnipsUsePythonVersion = 3
 
 """ Gruvbox material
 if exists('+termguicolors')
