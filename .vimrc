@@ -82,7 +82,7 @@ call plug#end()
 
 "" Plug-in Settings
 """ NerdTree
-nmap <c-f> :NERDTreeToggle<CR>
+nmap <c-f> NERDTreeToggle<CR>
 
 """ Vim-latex
 "let g:Tex_CompileRule_pdf = 'pdflatex -synctex=1 --interaction=batchmode $*'
@@ -204,7 +204,7 @@ let g:tex_conceal_frac=1
 "" Status Bar
 """ Show command
 "Show what command is being typed
-:set showcmd
+set showcmd
 
 " Clipboard
 set clipboard=unnamed
@@ -215,16 +215,16 @@ set belloff=all
 "" Syntax
 """ Indentation
 "Set smart indent
-:set smartindent
-:set autoindent
+set smartindent
+set autoindent
 
 """ Syntax Highlight
-:syntax on
+syntax on
 
 """ Configure tab spaces
-:set tabstop=4
-:set shiftwidth=4
-:set expandtab
+set tabstop=4
+set shiftwidth=4
+set expandtab
 
 """ Writing
 " Enable latex and markdown files
@@ -238,7 +238,7 @@ set textwidth=80
 
 """ File Encoding
 set encoding=utf-8
-:set fileencodings=utf-8
+set fileencodings=utf-8
 
 """ Backspace
 if has('win32')
@@ -247,20 +247,20 @@ endif
 
 "" Sessions
 """ Update Session
-:nmap <F2> :wa<Bar>exe "mksession! " . v:this_session<CR>
+nmap <F2> :wa<Bar>exe "mksession! " . v:this_session<CR>
 
 "" File navigation
 """ Folding
 "" Save folding state
-:nmap <F3> :mkview<CR>
-:nmap <F4> :loadview<CR>
-:nmap <F5> zfa(
+nmap <F3> :mkview<CR>
+nmap <F4> :loadview<CR>
+nmap <F5> zfa(
 
 """ Searching
 " Set highlight search
-:set hls
+set hls
 " Set increment highlight matches
-:set incsearch
+set incsearch
 " Clears highlight of search when Enter.
 " remap enter after search to clear highlight, then clears command.
 nnoremap <silent> <cr> :noh<CR>
@@ -292,7 +292,11 @@ map <C-\> :bel vert winc ]<CR>
     "Ctrl+W Z : Close preview window.
     "Ctrl+W V : Split current window in two, keeping the cursor position.
 
-"So, you can use <c-w>}if you want to quickly check the tag declaration, followed by <c-w>z to close it. But if you want to navigate, then you can simply use <c-w>v to create a split followed by the standard <c-] to navigate in the tags. When you're done with it, you can simply close the window with <c-w>c.
+" So, you can use <c-w>}if you want to quickly check the tag declaration,
+" followed by <c-w>z to close it. But if you want to navigate, then you can
+" simply use <c-w>v to create a split followed by the standard <c-] to navigate
+" in the tags. When you're done with it, you can simply close the window with
+" <c-w>c.
 
 """ Mouse support
 set mouse+=a
