@@ -297,9 +297,13 @@ set wildmenu
 "Hybrid: shows current abs number and relative
 "see: :h number_relativenumber
 "Show numbers by default
-set number! relativenumber!
-nmap <c-l> :set number! relativenumber!<CR>
-set number relativenumber
+" set number! relativenumber!
+" nmap <c-l> :set number! relativenumber!<CR>
+" set number relativenumber
+" Show relative numbers in normal mode and absolute numbers in insert mode
+set number
+autocmd InsertEnter * :set norelativenumber
+autocmd InsertLeave * :set relativenumber
 
 """ Tags
 map <C-\> :bel vert winc ]<CR>
