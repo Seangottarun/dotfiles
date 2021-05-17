@@ -93,7 +93,9 @@ call plug#end()
 
 "" Plug-in Settings
 """ NerdTree
-nmap <c-f> NERDTreeToggle<CR>
+" Looks like this colon might be needed for NerdTreeToggle to work?
+" Without it, <c-f> didn't seem to work.
+nmap <c-f> :NERDTreeToggle<CR>
 
 """ Vim-latex
 "let g:Tex_CompileRule_pdf = 'pdflatex -synctex=1 --interaction=batchmode $*'
@@ -210,7 +212,7 @@ let g:tex_conceal='abdmg'
 let g:tex_conceal_frac=1
 
 """ tagbar
-nmap <c-g> :TagbarToggle<CR>
+nmap <c-e> :TagbarToggle<CR>
 
 """ Verilog/SystemVerilog
 let g:verilog_syntax_fold_lst = "all"
@@ -248,6 +250,7 @@ set expandtab
 " autocmd FileType tex,markdown,text set spell
 set spell spelllang=en_ca
 set spell
+inoremap <C-l> <c-g>u<Esc>[s1z=`]a<c-g>u
 
 " Set word wrapping: prevent words from splitting off a line
 set wrap
