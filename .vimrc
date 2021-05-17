@@ -213,6 +213,8 @@ let g:tex_conceal_frac=1
 
 """ tagbar
 nmap <c-e> :TagbarToggle<CR>
+" Note: Tagbar works best with universal ctags, so may have to set bin path.
+" let g:tagbar_ctags_bin=""
 
 """ Verilog/SystemVerilog
 let g:verilog_syntax_fold_lst = "all"
@@ -272,6 +274,8 @@ nmap <F2> :wa<Bar>exe "mksession! " . v:this_session<CR>
 "" File navigation
 """ matchit (jump between keywords using %)
 runtime macros/matchit.vim
+" Alternative:
+" packadd! matchit
 
 """ Folding
 "" Save folding state
