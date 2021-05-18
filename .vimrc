@@ -72,6 +72,10 @@ Plug 'vimtaku/hl_matchit.vim'
 " S" for surrounding text in quotes in visual mode
 Plug 'tpope/vim-surround'
 
+""" vim-abolish
+" Abbreviation, substitution, coercion (change case, ex. to camel_case)
+Plug 'tpope/vim-abolish'
+
 if !workmode
     """ Vim-latex
     Plug 'vim-latex/vim-latex'
