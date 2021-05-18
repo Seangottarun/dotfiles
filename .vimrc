@@ -62,6 +62,12 @@ Plug 'preservim/tagbar'
 " Automatically highlights underlining matching words
 Plug 'vimtaku/hl_matchit.vim'
 
+""" surround.vim
+" Change surroundings (parentheses, brackets, quotes, etc)
+" Use cs'" (change single to double quotes) and S" for surrounding text in
+" quotes in visual mode.
+Plug 'tpope/vim-surround'
+
 if !workmode
     """ Vim-latex
     Plug 'vim-latex/vim-latex'
