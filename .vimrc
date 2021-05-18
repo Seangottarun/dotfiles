@@ -64,8 +64,12 @@ Plug 'vimtaku/hl_matchit.vim'
 
 """ surround.vim
 " Change surroundings (parentheses, brackets, quotes, etc)
-" Use cs'" (change single to double quotes) and S" for surrounding text in
-" quotes in visual mode.
+" cs: change surroundings
+" ds: delete surroundings
+" ys: you surround + vim motion or text object
+" cs'" (change single to double quotes)
+" yss" surround line in quotes
+" S" for surrounding text in quotes in visual mode
 Plug 'tpope/vim-surround'
 
 if !workmode
