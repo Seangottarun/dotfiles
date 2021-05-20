@@ -81,6 +81,14 @@ Plug 'tpope/vim-abolish'
 """ vim-sneak
 Plug 'justinmk/vim-sneak'
 
+""" vim-markdown
+" Plug 'godlygeek/tabular'
+" Plug 'plasticboy/vim-markdown'
+
+""" markdown-preview.nvim
+" If you have nodejs and yarn
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
+
 if !workmode
     """ Vim-latex
     Plug 'vim-latex/vim-latex'
