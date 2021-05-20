@@ -46,6 +46,7 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
 """ commentary.vim
+" gcc comment current line, gc to comment target of motion or visual selection
 Plug 'tpope/vim-commentary'
 
 """ Verilog/SystemVerilog
@@ -74,7 +75,11 @@ Plug 'tpope/vim-surround'
 
 """ vim-abolish
 " Abbreviation, substitution, coercion (change case, ex. to camel_case)
+" crc, crm, crs, cru to change word to camelCase, MixedCase, snake_case, and SNAKE_CASE
 Plug 'tpope/vim-abolish'
+
+""" vim-sneak
+Plug 'justinmk/vim-sneak'
 
 if !workmode
     """ Vim-latex
