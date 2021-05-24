@@ -3,8 +3,19 @@ if !exists(":Abolish")
 endif
 
 " :Abolish {despa,sepe}rat{e,es,ed,ing,ely,ion,ions,or}  {despe,sepa}rat{}
+" For some reason forward slashes don't work in Abolish and regular vim ab needs
+" to with a slash if you put in a slash.
+" iab w/ with
+" iab w/o/ without
+" iab e/o/ each other
+" iab not working for now unfortunately
+Abolish req{,s,d} require{,s,d}
+Abolish b{ec,c} because
+Abolish nec necessarily
+Abolish elem{,s} element{,s}
+Abolish succ{,l,ly} success{,ful,fully}
 Abolish {comp,cmop,cmpo}{,s,u} {comp,comp,comp}{uter,uters,uting}
-Abolish sci{,t} sci{ence,entific}
+Abolish sci{,s,t} scien{ce,ces,tific}
 Abolish geom geometric
 Abolish perf performance
 Abolish crit critical
