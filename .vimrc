@@ -9,6 +9,14 @@ filetype plugin on            " load plugin according to filetype
 let workmode=0
 
 """"""""""""""
+"  GVIM  "
+""""""""""""""
+if has("gui_running")
+    set guioptions=c
+    set guifont=Monospace\ 15
+endif
+
+""""""""""""""
 "  Plugins "
 """"""""""""""
 "" Vim-plug Installation
@@ -89,6 +97,12 @@ Plug 'justinmk/vim-sneak'
 " If you have nodejs and yarn
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
 
+""" everforest
+Plug 'sainnhe/everforest'
+
+""" papercolor
+" Plug 'NLKNguyen/papercolor-theme'
+
 if !workmode
     """ Vim-latex
     Plug 'vim-latex/vim-latex'
@@ -99,7 +113,7 @@ if !workmode
     Plug 'SirVer/ultisnips'
 
     """ Gruvbox
-    Plug 'jordanhong/gruvbox-material'
+    " Plug 'jordanhong/gruvbox-material'
 
     """ Ctrl-p (fuzzy search, uninstalled by default)
     " Plug 'ctrlpvim/ctrlp.vim'
@@ -161,35 +175,55 @@ let g:UltiSnipsSnippetDirectories=[$HOME.'/.vim/UltiSnips']
 " :echo " UltiSnips#SnippetsInCurrentScope()
 "let g:UltiSnipsUsePythonVersion = 3
 
-""" Gruvbox material
+""" Everforest
 if exists('+termguicolors')
     set termguicolors
 endif
-if !workmode
-    let g:gruvbox_material_enable_bold = 1
-endif
-if has('mac')
-    set background=light
-    if !workmode
-        let g:gruvbox_material_disable_italic_comment = 1
-    endif
-else
-    if workmode
-        set background=light
-    else
-        set background=dark
-    endif
-endif
-if !workmode
-    colorscheme gruvbox-material
-endif
+" May need to add to runtimepath
+" set runtimepath+=~/.vim/plugged/everforest/colors
+" Set contrast.
+" This configuration option should be placed before `colorscheme everforest`.
+" Available values: 'hard', 'medium'(default), 'soft'
+let g:everforest_background = 'soft'
+set background=dark
+let g:everforest_enable_italic = 1
+let g:everforest_disable_italic_comment = 1
+colorscheme everforest
+let g:airline_theme = 'everforest'
+
+""" Papercolor
+" colorscheme PaperColor
+" let g:airline_theme='papercolor'
+
+""" Gruvbox material
+" if exists('+termguicolors')
+"     set termguicolors
+" endif
+" if !workmode
+"     let g:gruvbox_material_enable_bold = 1
+" endif
+" if has('mac')
+"     set background=light
+"     if !workmode
+"         let g:gruvbox_material_disable_italic_comment = 1
+"     endif
+" else
+"     if workmode
+"         set background=light
+"     else
+"         set background=dark
+"     endif
+" endif
+" if !workmode
+"     colorscheme gruvbox-material
+" endif
 
 """ Vim Airline
-if workmode
-    let g:airline_theme='minimalist'
-else
-    let g:airline_theme='gruvbox_material'
-endif
+" if workmode
+"     let g:airline_theme='minimalist'
+" else
+    " let g:airline_theme='gruvbox_material'
+" endif
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
 endif
