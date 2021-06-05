@@ -111,6 +111,12 @@ Plug 'sainnhe/everforest'
 " Use counts plus upper case H,J,K,L to move along columns/rows
 Plug 'chrisbra/csv.vim'
 
+""" vim-gutentags
+" Autogenerate tags file (with incremental generation)
+" let g:gutentags_enabled = 0
+" let g:gutentags_ctags_executable
+Plug 'ludovicchabant/vim-gutentags'
+
 if !workmode
     """ Vim-latex
     Plug 'vim-latex/vim-latex'
