@@ -274,6 +274,9 @@ let g:tex_conceal_frac=1
 
 """ tagbar
 nmap <c-e> :TagbarToggle<CR>
+" Sort tags by appearance instead of alphabetical order.
+" Toggle sorting with `s`
+let g:tagbar_sort = 0
 " Note: Tagbar works best with universal ctags, so may have to set bin path.
 " let g:tagbar_ctags_bin=""
 
