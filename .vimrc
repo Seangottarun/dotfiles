@@ -103,6 +103,14 @@ Plug 'sainnhe/everforest'
 """ papercolor
 " Plug 'NLKNguyen/papercolor-theme'
 
+""" csv.vim
+" Normal mode commands
+" <Enter> dynamically folds all rows that don't match value in current column
+" <Space> dynamically folds all rows that match value in current column
+" :CSVTabularize to pretty print as table
+" Use counts plus upper case H,J,K,L to move along columns/rows
+Plug 'chrisbra/csv.vim'
+
 if !workmode
     """ Vim-latex
     Plug 'vim-latex/vim-latex'
