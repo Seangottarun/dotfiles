@@ -177,7 +177,7 @@ let g:Tex_SmartKeyQuote=0
 
 let g:UltiSnipsListSnippets="<c-h>"
 "let g:UltiSnipsEditSplit="vertical" "Split ultisnipedit vertically
-let g:UltiSnipsSnippetDirectories=[$HOME.'/.vim/UltiSnips']
+" let g:UltiSnipsSnippetDirectories=[$HOME.'/.vim/UltiSnips']
 " If needed, use UltiSnipsEdit to find the default location to put the snippets dir.
 " You can also check currently loaded snippets with
 " :echo " UltiSnips#SnippetsInCurrentScope()
