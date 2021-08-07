@@ -9,23 +9,15 @@ filetype plugin on            " load plugin according to filetype
 let workmode=0
 
 """"""""""""""
-"  GVIM  "
-""""""""""""""
-if has("gui_running")
-    set guioptions=c
-    set guifont=Monospace\ 15
-endif
-
-""""""""""""""
 "  Plugins "
 """"""""""""""
 "" Vim-plug Installation
 if !has('win32')
-  if empty(glob('~/.vim/autoload/plug.vim'))
-    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-      \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-  endif
+    if empty(glob('~/.vim/autoload/plug.vim'))
+        silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+                    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+        autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+    endif
 endif
 
 "" Install Plugins
@@ -43,8 +35,20 @@ Plug 'tpope/vim-fugitive'
 " fugitive plugin for GitHub (:GBrowse for opening GitHub URLs)
 Plug 'tpope/vim-rhubarb'
 
-""" vim-gitgutter
-Plug 'airblade/vim-gitgutter'
+" vim-gitgutter and vim-signify seem to not work together
+" gitgutter is nicer for git (stage hunks)
+" signify supports all VCS
+if workmode
+    """ vim-signify
+    if has('nvim') || has('patch-8.0.902')
+        Plug 'mhinz/vim-signify'
+    else
+        Plug 'mhinz/vim-signify', { 'branch': 'legacy' }
+    endif
+else
+    """ vim-gitgutter
+    Plug 'airblade/vim-gitgutter'
+endif
 
 """ vim-pythonsense
 Plug 'jeetsukumaran/vim-pythonsense'
@@ -55,6 +59,7 @@ Plug 'junegunn/fzf.vim'
 
 """ commentary.vim
 " gcc comment current line, gc to comment target of motion or visual selection
+" gc is also a text object
 Plug 'tpope/vim-commentary'
 
 """ Verilog/SystemVerilog
@@ -113,9 +118,31 @@ Plug 'chrisbra/csv.vim'
 
 """ vim-gutentags
 " Autogenerate tags file (with incremental generation)
-" let g:gutentags_enabled = 0
-" let g:gutentags_ctags_executable
+" :GutentagsUpdate and :GutentagsUpdate! for forcing an update of current tag file
+" with current buffer and whole project, respectively
 Plug 'ludovicchabant/vim-gutentags'
+
+""" gutentags_plus
+" Handles cscope databases
+" <leader>cs 	Find symbol (reference) under cursor
+" <leader>cg 	Find symbol definition under cursor
+" <leader>cd 	Functions called by this function
+" <leader>cc 	Functions calling this function
+" <leader>ct 	Find text string under cursor
+" <leader>ce 	Find egrep pattern under cursor
+" <leader>cf 	Find file name under cursor
+" <leader>ci 	Find files #including the file name under cursor
+" <leader>ca 	Find places where current symbol is assigned
+" <leader>cz 	Find current word in ctags database
+" Plug 'skywind3000/gutentags_plus'
+
+""" vim-dirdiff
+" :DirDiff <dir1> <dir2>
+" vim -c "DirDiff dir1 dir2"
+Plug 'will133/vim-dirdiff'
+
+""" ALE
+Plug 'dense-analysis/ale'
 
 if !workmode
     """ Vim-latex
@@ -131,9 +158,6 @@ if !workmode
 
     """ Ctrl-p (fuzzy search, uninstalled by default)
     " Plug 'ctrlpvim/ctrlp.vim'
-
-    """ ALE
-    Plug 'dense-analysis/ale'
 
     """ textobj-latex
     Plug 'kana/vim-textobj-user'
@@ -151,6 +175,8 @@ call plug#end()
 " Looks like this colon might be needed for NerdTreeToggle to work?
 " Without it, <c-f> didn't seem to work.
 nmap <c-f> :NERDTreeToggle<CR>
+" Change CWD whenever tree root is changed
+let NERDTreeChDirMode=2
 
 """ Vim-latex
 "let g:Tex_CompileRule_pdf = 'pdflatex -synctex=1 --interaction=batchmode $*'
@@ -236,7 +262,7 @@ let g:airline_theme = 'everforest'
 " if workmode
 "     let g:airline_theme='minimalist'
 " else
-    " let g:airline_theme='gruvbox_material'
+"     let g:airline_theme='gruvbox_material'
 " endif
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
@@ -294,8 +320,37 @@ let g:tagbar_sort = 0
 " Note: Tagbar works best with universal ctags, so may have to set bin path.
 " let g:tagbar_ctags_bin=""
 
+""" vim-gutentags
+" let g:gutentags_enabled = 0
+" let g:gutentags_ctags_executable
+" let g:gutentags_gtags_cscope_executable
+" let g:gutentags_project_root=['']
+
+""" gutentags_plus
+" enable gtags module
+" let g:gutentags_modules=['ctags', 'gtags_cscope']
+" let g:gutentags_define_advanced_commands = 1
+
 """ Verilog/SystemVerilog
 let g:verilog_syntax_fold_lst = "all"
+
+""" vim-signify
+" Faster sign updates on CursorHold/CursorHoldI
+set updatetime=100
+
+nnoremap <leader>gd :SignifyDiff<cr>
+nnoremap <leader>gp :SignifyHunkDiff<cr>
+nnoremap <leader>gu :SignifyHunkUndo<cr>
+
+" hunk jumping
+nmap <leader>gj <plug>(signify-next-hunk)
+nmap <leader>gk <plug>(signify-prev-hunk)
+
+" hunk text object
+omap ic <plug>(signify-motion-inner-pending)
+xmap ic <plug>(signify-motion-inner-visual)
+omap ac <plug>(signify-motion-outer-pending)
+xmap ac <plug>(signify-motion-outer-visual)
 
 """"""""""""""
 "  General Settings  "
@@ -389,17 +444,19 @@ autocmd InsertLeave * :set relativenumber
 
 """ Tags
 map <C-\> :bel vert winc ]<CR>
+nnoremap <silent><Leader><C-]> <C-w><C-]><C-w>T
 
 " HOW TO USE TAGS:
-    "Ctrl+] - go to definition
-    "Ctrl+T - Jump back from the definition.
-    "Ctrl+O - Jump to last place; Ctrl+I to reverse
-    "Ctrl+W Ctrl+] - Open the definition in a horizontal split
-    "Ctrl+\ - Open the definition in a vertical to the right (self-defined)
+"Ctrl+] - go to definition
+"Ctrl+T - Jump back from the definition.
+"Ctrl+O - Jump to last place; Ctrl+I to reverse
+"Ctrl+W Ctrl+] - Open the definition in a horizontal split
+"Ctrl+\ - Open the definition in a vertical to the right (self-defined)
+"<leader>Ctrl+] - Open the definition in a new tab (self-defined)
 
-    "Ctrl+W } : Opens a preview window with the location of the tag definition. The cursor does not change its position, so tag stack is not updated.
-    "Ctrl+W Z : Close preview window.
-    "Ctrl+W V : Split current window in two, keeping the cursor position.
+"Ctrl+W } : Opens a preview window with the location of the tag definition. The cursor does not change its position, so tag stack is not updated.
+"Ctrl+W Z : Close preview window.
+"Ctrl+W V : Split current window in two, keeping the cursor position.
 
 " So, you can use <c-w>}if you want to quickly check the tag declaration,
 " followed by <c-w>z to close it. But if you want to navigate, then you can
@@ -434,6 +491,13 @@ set iskeyword+=\-   "sets to recognize dashes
 " If using pyenv, do pyenv which python to find python home and dll.
 " set pythonthreehome=C:\randomplace\python
 " set pythonthreedll=C:\randomplace\python\python38.dll
+set pythonthreehome=C:\Users\i5_4670k\.pyenv\pyenv-win\versions\3.8.1
+set pythonthreedll=C:\Users\i5_4670k\.pyenv\pyenv-win\versions\3.8.1\python38.dll
+
+"" Abbreviations
+iab w/ with
+iab w/o/ without
+iab e/o/ each other
 
 "" zj/zk jump to next closed fold
 " Supports counts like [count]zj
@@ -477,57 +541,57 @@ nnoremap <silent> zk :<c-u>call RepeatCmd('call NextClosedFold("k")')<cr>
 " see http://vimcasts.org/episodes/writing-a-custom-fold-expression/
 """ defines a foldlevel for each line of code
 function! VimFolds(lnum)
-  let s:thisline = getline(a:lnum)
-  if match(s:thisline, '^"" ') >= 0
-    return '>2'
-  endif
-  if match(s:thisline, '^""" ') >= 0
-    return '>3'
-  endif
-  let s:two_following_lines = 0
-  if line(a:lnum) + 2 <= line('$')
-    let s:line_1_after = getline(a:lnum+1)
-    let s:line_2_after = getline(a:lnum+2)
-    let s:two_following_lines = 1
-  endif
-  if !s:two_following_lines
-      return '='
+    let s:thisline = getline(a:lnum)
+    if match(s:thisline, '^"" ') >= 0
+        return '>2'
     endif
-  else
+    if match(s:thisline, '^""" ') >= 0
+        return '>3'
+    endif
+    let s:two_following_lines = 0
+    if line(a:lnum) + 2 <= line('$')
+        let s:line_1_after = getline(a:lnum+1)
+        let s:line_2_after = getline(a:lnum+2)
+        let s:two_following_lines = 1
+    endif
+    if !s:two_following_lines
+        return '='
+    endif
+else
     if (match(s:thisline, '^"""""') >= 0) &&
-       \ (match(s:line_1_after, '^"  ') >= 0) &&
-       \ (match(s:line_2_after, '^""""') >= 0)
-      return '>1'
+                \ (match(s:line_1_after, '^"  ') >= 0) &&
+                \ (match(s:line_2_after, '^""""') >= 0)
+        return '>1'
     else
-      return '='
+        return '='
     endif
-  endif
+endif
 endfunction
 
 """ defines a foldtext
 function! VimFoldText()
-  " handle special case of normal comment first
-  let s:info = '('.string(v:foldend-v:foldstart).' l)'
-  if v:foldlevel == 1
-    let s:line = ' ◇ '.getline(v:foldstart+1)[3:-2]
-  elseif v:foldlevel == 2
-    let s:line = '   ●  '.getline(v:foldstart)[3:]
-  elseif v:foldlevel == 3
-    let s:line = '     ▪ '.getline(v:foldstart)[4:]
-  endif
-  if strwidth(s:line) > 80 - len(s:info) - 3
-    return s:line[:79-len(s:info)-3+len(s:line)-strwidth(s:line)].'...'.s:info
-  else
-    return s:line.repeat(' ', 80 - strwidth(s:line) - len(s:info)).s:info
-  endif
+    " handle special case of normal comment first
+    let s:info = '('.string(v:foldend-v:foldstart).' l)'
+    if v:foldlevel == 1
+        let s:line = ' ◇ '.getline(v:foldstart+1)[3:-2]
+    elseif v:foldlevel == 2
+        let s:line = '   ●  '.getline(v:foldstart)[3:]
+    elseif v:foldlevel == 3
+        let s:line = '     ▪ '.getline(v:foldstart)[4:]
+    endif
+    if strwidth(s:line) > 80 - len(s:info) - 3
+        return s:line[:79-len(s:info)-3+len(s:line)-strwidth(s:line)].'...'.s:info
+    else
+        return s:line.repeat(' ', 80 - strwidth(s:line) - len(s:info)).s:info
+    endif
 endfunction
 
 """ set foldsettings automatically for vim files
 augroup fold_vimrc
-  autocmd!
-  autocmd FileType vim
-                   \ setlocal foldmethod=expr |
-                   \ setlocal foldexpr=VimFolds(v:lnum) |
-                   \ setlocal foldtext=VimFoldText() |
-     "              \ set foldcolumn=2 foldminlines=2
+    autocmd!
+    autocmd FileType vim
+                \ setlocal foldmethod=expr |
+                \ setlocal foldexpr=VimFolds(v:lnum) |
+                \ setlocal foldtext=VimFoldText() |
+    "              \ set foldcolumn=2 foldminlines=2
 augroup END
