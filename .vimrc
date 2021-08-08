@@ -491,8 +491,8 @@ set iskeyword+=\-   "sets to recognize dashes
 " If using pyenv, do pyenv which python to find python home and dll.
 " set pythonthreehome=C:\randomplace\python
 " set pythonthreedll=C:\randomplace\python\python38.dll
-set pythonthreehome=C:\Users\i5_4670k\.pyenv\pyenv-win\versions\3.8.1
-set pythonthreedll=C:\Users\i5_4670k\.pyenv\pyenv-win\versions\3.8.1\python38.dll
+" set pythonthreehome=C:\Users\i5_4670k\.pyenv\pyenv-win\versions\3.8.1
+" set pythonthreedll=C:\Users\i5_4670k\.pyenv\pyenv-win\versions\3.8.1\python38.dll
 
 "" Abbreviations
 iab w/ with
