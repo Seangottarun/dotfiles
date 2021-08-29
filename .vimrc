@@ -534,6 +534,18 @@ nnoremap <silent> zk :<c-u>call RepeatCmd('call NextClosedFold("k")')<cr>
 " nnoremap <silent> <leader>zj :<c-u>call RepeatCmd('call NextClosedFold("j")')<cr>
 " nnoremap <silent> <leader>zk :<c-u>call RepeatCmd('call NextClosedFold("k")')<cr>
 
+""""""""""""""
+"  Custom Mappings  "
+""""""""""""""
+" yank current relative path
+nmap ygf :let @+ = expand("%")<cr>
+" yank current file full path
+nmap ygp :let @+ = expand("%:p")<cr>
+" yank current dir full path
+nmap ygd :let @+ = expand("%:p:h")<cr>
+" yank current file name
+nmap ygn :let @+ = expand("%:t")<cr>
+
 """"""""""""""""""""""""
 "  Vimrc Organization  "
 """"""""""""""""""""""""

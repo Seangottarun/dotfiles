@@ -4,3 +4,4 @@ if (&ft != 'c')
 endif
 
 setlocal foldmethod=syntax
+set keywordprg=cppman
