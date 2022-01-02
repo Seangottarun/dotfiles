@@ -23,6 +23,16 @@ endif
 "" Install Plugins
 call plug#begin('~/.vim/plugged')
 
+if has("nvim-0.5.0")
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+" Use release branch (recommend)
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+endif
+
+Plug 'godlygeek/tabular'
+Plug 'plasticboy/vim-markdown'
+
 """ NerdTree file manager
 Plug 'preservim/nerdtree'
 
@@ -34,6 +44,14 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'tpope/vim-fugitive'
 " fugitive plugin for GitHub (:GBrowse for opening GitHub URLs)
 Plug 'tpope/vim-rhubarb'
+
+""" vim-devicons
+" mkdir -p ~/.local/share/fonts
+" cd ~/.local/share/fonts && curl -fLo "Droid Sans Mono for Powerline Nerd Font Complete.otf" https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/DroidSansMono/complete/Droid%20Sans%20Mono%20Nerd%20Font%20Complete.otf
+Plug 'ryanoasis/vim-devicons'
+
+""" nerdtree-git-plugin
+Plug 'Xuyuanp/nerdtree-git-plugin'
 
 " vim-gitgutter and vim-signify seem to not work together
 " gitgutter is nicer for git (stage hunks)
@@ -151,7 +169,7 @@ if !workmode
     """ Vimtex
     "Plug 'lervag/vimtex'
     """ UltiSnip Engine
-    Plug 'SirVer/ultisnips'
+    " Plug 'SirVer/ultisnips'
 
     """ Gruvbox
     " Plug 'jordanhong/gruvbox-material'
@@ -174,9 +192,10 @@ call plug#end()
 """ NerdTree
 " Looks like this colon might be needed for NerdTreeToggle to work?
 " Without it, <c-f> didn't seem to work.
-nmap <c-f> :NERDTreeToggle<CR>
+nmap <c-f> :NERDTreeFind<CR>
+nmap <c-n> :NERDTreeToggle<CR>
 " Change CWD whenever tree root is changed
-let NERDTreeChDirMode=2
+" let NERDTreeChDirMode=2
 
 """ Vim-latex
 "let g:Tex_CompileRule_pdf = 'pdflatex -synctex=1 --interaction=batchmode $*'
@@ -214,6 +233,69 @@ let g:UltiSnipsListSnippets="<c-h>"
 " You can also check currently loaded snippets with
 " :echo " UltiSnips#SnippetsInCurrentScope()
 "let g:UltiSnipsUsePythonVersion = 3
+
+if has('nvim')
+    """ telescope.nvim
+    " Find files using Telescope command-line sugar.
+    nnoremap <leader>ff <cmd>Telescope find_files<cr>
+    nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+    nnoremap <leader>fb <cmd>Telescope buffers<cr>
+    nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+
+    nnoremap <leader>fol <cmd>Telescope oldfiles<cr>
+    nnoremap <leader>fst <cmd>Telescope git_status<cr>
+    nnoremap <leader>fta <cmd>Telescope git_stash<cr>
+
+    """ coc.nvim
+    " Use tab for trigger completion with characters ahead and navigate.
+    " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+    " other plugin before putting this into your config.
+    inoremap <silent><expr> <TAB>
+          \ pumvisible() ? "\<C-n>" :
+          \ <SID>check_back_space() ? "\<TAB>" :
+          \ coc#refresh()
+    inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+    function! s:check_back_space() abort
+      let col = col('.') - 1
+      return !col || getline('.')[col - 1]  =~# '\s'
+    endfunction
+
+    " Use <c-space> to trigger completion.
+    inoremap <silent><expr> <c-space> coc#refresh()
+
+    " Make <CR> auto-select the first completion item and notify coc.nvim to
+    " format on enter, <cr> could be remapped by other vim plugin
+    inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+                                  \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+    " Use `[g` and `]g` to navigate diagnostics
+    " Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
+    nmap <silent> [g <Plug>(coc-diagnostic-prev)
+    nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+    " GoTo code navigation.
+    nmap <silent> gd <Plug>(coc-definition)
+    nmap <silent> gy <Plug>(coc-type-definition)
+    nmap <silent> gi <Plug>(coc-implementation)
+    nmap <silent> gr <Plug>(coc-references)
+
+    " Use K to show documentation in preview window.
+    nnoremap <silent> L :call <SID>show_documentation()<CR>
+
+    function! s:show_documentation()
+      if (index(['vim','help'], &filetype) >= 0)
+        execute 'h '.expand('<cword>')
+      elseif (coc#rpc#ready())
+        call CocActionAsync('doHover')
+      else
+        execute '!' . &keywordprg . " " . expand('<cword>')
+      endif
+    endfunction
+
+    " Highlight the symbol and its references when holding the cursor.
+    autocmd CursorHold * silent call CocActionAsync('highlight')
+endif
 
 """ Everforest
 if exists('+termguicolors')
@@ -362,6 +444,9 @@ set showcmd
 
 " Clipboard
 set clipboard=unnamed
+if has('nvim')
+    set clipboard+=unnamedplus
+endif
 
 "" Mute bell
 set belloff=all
@@ -479,7 +564,7 @@ command! Maketag !ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .
 "command! Maketag !ctags -R . --c++-kinds=+pf --fields=+imaSft --extras=+q
 "command! Maketag !ctags -R . --c++-kinds=+pf --fields=+imaSft --extra=+q
 set tags=tags;/
-set autochdir
+" set autochdir
 set shortmess=a
 
 "" Autocomplete
@@ -545,6 +630,9 @@ nmap ygp :let @+ = expand("%:p")<cr>
 nmap ygd :let @+ = expand("%:p:h")<cr>
 " yank current file name
 nmap ygn :let @+ = expand("%:t")<cr>
+
+" change to current file's dir 
+nmap dir :cd %:h<cr>
 
 """"""""""""""""""""""""
 "  Vimrc Organization  "
