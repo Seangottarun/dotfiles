@@ -11,9 +11,17 @@
 set -o vi
 
 export EDITOR=vim
+# export EDITOR=nvim
 
 # Use vim as pager
 export MANPAGER="env MAN_PN=1 vim -M +MANPAGER -"
+# export MANPAGER="nvim -c 'set ft=man' -"
+# export PAGER="nvim -R"
+
+# Working for nvim
+# export MANPAGER='nvim +Man!'
+# for cppman, use cppman -c system
+# export PAGER='nvim +Man!'
 
 # append to the history file, don't overwrite it
 shopt -s histappend
@@ -21,7 +29,7 @@ shopt -s histappend
 # If set, the pattern '**' used in a filename expansion context will match
 # all files and zero or more directories and subdirectories. If the pattern
 # is followed by a '/', only directories and subdirectories match.
-shopt -s globstar
+# shopt -s globstar
 
 # If set, an argument to the cd builtin command that is not a directory is
 # assumed to be the name of a variable whose value is the directory to change
@@ -61,7 +69,8 @@ export HISTFILESIZE=50000
 # Miscellaneous
 ################################################################################
 # Make bash completion work with :: for cppman
-export COMP_WORDBREAKS=" /\"\'><;|&("
+# This breaks tab completion for paths
+# export COMP_WORDBREAKS=" /\"\'><;|&("
 
 ################################################################################
 # Aliases
