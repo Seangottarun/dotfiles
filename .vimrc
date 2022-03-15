@@ -112,6 +112,9 @@ Plug 'tpope/vim-abolish'
 """ vim-sneak
 Plug 'justinmk/vim-sneak'
 
+""" vim-sneak
+Plug 'google/vim-searchindex'
+
 """ vim-markdown
 " Plug 'godlygeek/tabular'
 " Plug 'plasticboy/vim-markdown'
