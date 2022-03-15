@@ -5,6 +5,11 @@
 
 set nocompatible              " be iMproved, required
 filetype plugin on            " load plugin according to filetype
+let use_plugins=1
+let use_light_plugins=1
+let use_minimal_plugins=1
+let use_heavy_plugins=1
+
 " let workmode=1                " only load work safe plugins
 let workmode=0
 
@@ -23,149 +28,117 @@ endif
 "" Install Plugins
 call plug#begin('~/.vim/plugged')
 
-if has("nvim-0.5.0")
-Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-telescope/telescope.nvim'
-" Use release branch (recommend)
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-endif
-
-Plug 'godlygeek/tabular'
-Plug 'plasticboy/vim-markdown'
-
-""" NerdTree file manager
-Plug 'preservim/nerdtree'
-
-""" Vim Airline
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-
-""" Fugitive
-Plug 'tpope/vim-fugitive'
-" fugitive plugin for GitHub (:GBrowse for opening GitHub URLs)
-Plug 'tpope/vim-rhubarb'
-
-""" vim-devicons
-" mkdir -p ~/.local/share/fonts
-" cd ~/.local/share/fonts && curl -fLo "Droid Sans Mono for Powerline Nerd Font Complete.otf" https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/DroidSansMono/complete/Droid%20Sans%20Mono%20Nerd%20Font%20Complete.otf
-Plug 'ryanoasis/vim-devicons'
-
-""" nerdtree-git-plugin
-Plug 'Xuyuanp/nerdtree-git-plugin'
-
-" vim-gitgutter and vim-signify seem to not work together
-" gitgutter is nicer for git (stage hunks)
-" signify supports all VCS
-if workmode
-    """ vim-signify
-    if has('nvim') || has('patch-8.0.902')
-        Plug 'mhinz/vim-signify'
-    else
-        Plug 'mhinz/vim-signify', { 'branch': 'legacy' }
-    endif
-else
-    """ vim-gitgutter
-    Plug 'airblade/vim-gitgutter'
-endif
-
-""" vim-pythonsense
-Plug 'jeetsukumaran/vim-pythonsense'
-
-""" fzf.vim
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
-
-""" commentary.vim
-" gcc comment current line, gc to comment target of motion or visual selection
-" gc is also a text object
-Plug 'tpope/vim-commentary'
-
-""" Verilog/SystemVerilog
-Plug 'vhda/verilog_systemverilog.vim'
-
-""" vim-better-whitespace.vim
-" Run :StripWhitespace on entire file or visual selection
-Plug 'ntpeters/vim-better-whitespace'
-
-""" Tagbar class outline viewer for Vim using tags
-Plug 'preservim/tagbar'
-
-""" hl_matchit.vim
-" Automatically highlights underlining matching words
-Plug 'vimtaku/hl_matchit.vim'
-
-""" surround.vim
-" Change surroundings (parentheses, brackets, quotes, etc)
-" cs: change surroundings
-" ds: delete surroundings
-" ys: you surround + vim motion or text object
-" cs'" (change single to double quotes)
-" yss" surround line in quotes
-" S" for surrounding text in quotes in visual mode
-Plug 'tpope/vim-surround'
-
-""" vim-abolish
-" Abbreviation, substitution, coercion (change case, ex. to camel_case)
-" crc, crm, crs, cru to change word to camelCase, MixedCase, snake_case, and SNAKE_CASE
-Plug 'tpope/vim-abolish'
-
-""" vim-sneak
-Plug 'justinmk/vim-sneak'
-
-""" vim-sneak
-Plug 'google/vim-searchindex'
-
-""" vim-markdown
-" Plug 'godlygeek/tabular'
-" Plug 'plasticboy/vim-markdown'
-
-""" markdown-preview.nvim
-" If you have nodejs and yarn
-Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
-
-""" everforest
+""" color plugins
+"""" everforest
 Plug 'sainnhe/everforest'
 
-""" papercolor
-" Plug 'NLKNguyen/papercolor-theme'
+"""" papercolor
+Plug 'NLKNguyen/papercolor-theme'
 
-""" csv.vim
-" Normal mode commands
-" <Enter> dynamically folds all rows that don't match value in current column
-" <Space> dynamically folds all rows that match value in current column
-" :CSVTabularize to pretty print as table
-" Use counts plus upper case H,J,K,L to move along columns/rows
-Plug 'chrisbra/csv.vim'
+"""" Gruvbox
+" Plug 'jordanhong/gruvbox-material'
 
-""" vim-gutentags
-" Autogenerate tags file (with incremental generation)
-" :GutentagsUpdate and :GutentagsUpdate! for forcing an update of current tag file
-" with current buffer and whole project, respectively
-Plug 'ludovicchabant/vim-gutentags'
+""" light plugins
+if use_light_plugins
+    """ ALE
+    Plug 'dense-analysis/ale'
 
-""" gutentags_plus
-" Handles cscope databases
-" <leader>cs 	Find symbol (reference) under cursor
-" <leader>cg 	Find symbol definition under cursor
-" <leader>cd 	Functions called by this function
-" <leader>cc 	Functions calling this function
-" <leader>ct 	Find text string under cursor
-" <leader>ce 	Find egrep pattern under cursor
-" <leader>cf 	Find file name under cursor
-" <leader>ci 	Find files #including the file name under cursor
-" <leader>ca 	Find places where current symbol is assigned
-" <leader>cz 	Find current word in ctags database
-" Plug 'skywind3000/gutentags_plus'
+    """ csv.vim
+    " Normal mode commands
+    " <Enter> dynamically folds all rows that don't match value in current column
+    " <Space> dynamically folds all rows that match value in current column
+    " :CSVTabularize to pretty print as table
+    " Use counts plus upper case H,J,K,L to move along columns/rows
+    Plug 'chrisbra/csv.vim'
 
-""" vim-dirdiff
-" :DirDiff <dir1> <dir2>
-" vim -c "DirDiff dir1 dir2"
-Plug 'will133/vim-dirdiff'
+    """ hl_matchit.vim
+    " Automatically highlights underlining matching words
+    Plug 'vimtaku/hl_matchit.vim'
 
-""" ALE
-Plug 'dense-analysis/ale'
+    """ NerdTree file manager
+    Plug 'preservim/nerdtree'
+    " nerdtree-git-plugin
+    Plug 'Xuyuanp/nerdtree-git-plugin'
 
-if !workmode
+    """ Tabular text alignment
+    Plug 'godlygeek/tabular'
+
+    """ Tagbar class outline viewer for Vim using tags
+    Plug 'preservim/tagbar'
+
+    """ Verilog/SystemVerilog
+    Plug 'vhda/verilog_systemverilog.vim'
+
+    """ vim-abolish
+    " Abbreviation, substitution, coercion (change case, ex. to camel_case)
+    " crc, crm, crs, cru to change word to camelCase, MixedCase, snake_case, and SNAKE_CASE
+    Plug 'tpope/vim-abolish'
+
+    """ Vim Airline
+    Plug 'vim-airline/vim-airline'
+    Plug 'vim-airline/vim-airline-themes'
+
+    """ vim-better-whitespace.vim
+    " Run :StripWhitespace on entire file or visual selection
+    Plug 'ntpeters/vim-better-whitespace'
+
+    """ commentary.vim
+    " gcc comment current line, gc to comment target of motion or visual selection
+    " gc is also a text object
+    Plug 'tpope/vim-commentary'
+
+    """ vim-dirdiff
+    " :DirDiff <dir1> <dir2>
+    " vim -c "DirDiff dir1 dir2"
+    Plug 'will133/vim-dirdiff'
+
+    """ Fugitive git integration
+    Plug 'tpope/vim-fugitive'
+    " fugitive plugin for GitHub (:GBrowse for opening GitHub URLs)
+    Plug 'tpope/vim-rhubarb'
+
+    """ vim-markdown
+    " Plug 'plasticboy/vim-markdown'
+
+    """ vim-pythonsense python text objects and motions
+    Plug 'jeetsukumaran/vim-pythonsense'
+
+    """ vim-searchindex
+    Plug 'google/vim-searchindex'
+
+    """ vim-sneak
+    Plug 'justinmk/vim-sneak'
+
+    """ surround.vim
+    " Change surroundings (parentheses, brackets, quotes, etc)
+    " cs: change surroundings
+    " ds: delete surroundings
+    " ys: you surround + vim motion or text object
+    " cs'" (change single to double quotes)
+    " yss" surround line in quotes
+    " S" for surrounding text in quotes in visual mode
+    Plug 'tpope/vim-surround'
+
+    " vim-gitgutter and vim-signify seem to not work together
+    " gitgutter is nicer for git (stage hunks)
+    " signify supports all VCS
+    if workmode
+        """ vim-signify
+        if has('nvim') || has('patch-8.0.902')
+            Plug 'mhinz/vim-signify'
+        else
+            Plug 'mhinz/vim-signify', { 'branch': 'legacy' }
+        endif
+    else
+        """ vim-gitgutter
+        Plug 'airblade/vim-gitgutter'
+    endif
+
+    if has("nvim-0.5.0")
+        Plug 'nvim-lua/plenary.nvim'
+        Plug 'nvim-telescope/telescope.nvim'
+    endif
+
     """ Vim-latex
     Plug 'vim-latex/vim-latex'
 
@@ -173,12 +146,6 @@ if !workmode
     "Plug 'lervag/vimtex'
     """ UltiSnip Engine
     " Plug 'SirVer/ultisnips'
-
-    """ Gruvbox
-    " Plug 'jordanhong/gruvbox-material'
-
-    """ Ctrl-p (fuzzy search, uninstalled by default)
-    " Plug 'ctrlpvim/ctrlp.vim'
 
     """ textobj-latex
     Plug 'kana/vim-textobj-user'
@@ -188,8 +155,49 @@ if !workmode
     Plug 'KeitaNakamura/tex-conceal.vim', {'for': 'tex'}
 endif
 
-call plug#end()
+""" heavy plugins
+if use_heavy_plugins
+    """ fzf.vim
+    Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+    Plug 'junegunn/fzf.vim'
 
+    """ markdown-preview.nvim
+    " If you have nodejs and yarn
+    Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
+
+    """ vim-devicons
+    " mkdir -p ~/.local/share/fonts
+    " cd ~/.local/share/fonts && curl -fLo "Droid Sans Mono for Powerline Nerd Font Complete.otf" https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/DroidSansMono/complete/Droid%20Sans%20Mono%20Nerd%20Font%20Complete.otf
+    Plug 'ryanoasis/vim-devicons'
+
+    """ vim-gutentags
+    " Autogenerate tags file (with incremental generation)
+    " :GutentagsUpdate and :GutentagsUpdate! for forcing an update of current tag file
+    " with current buffer and whole project, respectively
+    Plug 'ludovicchabant/vim-gutentags'
+
+    """ gutentags_plus
+    " Handles cscope databases
+    " <leader>cs 	Find symbol (reference) under cursor
+    " <leader>cg 	Find symbol definition under cursor
+    " <leader>cd 	Functions called by this function
+    " <leader>cc 	Functions calling this function
+    " <leader>ct 	Find text string under cursor
+    " <leader>ce 	Find egrep pattern under cursor
+    " <leader>cf 	Find file name under cursor
+    " <leader>ci 	Find files #including the file name under cursor
+    " <leader>ca 	Find places where current symbol is assigned
+    " <leader>cz 	Find current word in ctags database
+    " Plug 'skywind3000/gutentags_plus'
+
+
+    if has("nvim-0.5.0")
+        " Use release branch (recommend)
+        Plug 'neoclide/coc.nvim', {'branch': 'release'}
+    endif
+endif
+
+call plug#end()
 
 "" Plug-in Settings
 """ NerdTree
