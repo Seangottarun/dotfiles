@@ -207,6 +207,7 @@ nmap <c-f> :NERDTreeFind<CR>
 nmap <c-n> :NERDTreeToggle<CR>
 " Change CWD whenever tree root is changed
 " let NERDTreeChDirMode=2
+let NERDTreeIgnore = ['\.bak$']
 
 """ Vim-latex
 "let g:Tex_CompileRule_pdf = 'pdflatex -synctex=1 --interaction=batchmode $*'
