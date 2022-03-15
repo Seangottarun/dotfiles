@@ -495,6 +495,9 @@ runtime macros/matchit.vim
 " Alternative:
 " packadd! matchit
 
+"" Man command
+runtime! ftplugin/man.vim
+
 """ Folding
 "" Save folding state
 nmap <F3> :mkview<CR>
