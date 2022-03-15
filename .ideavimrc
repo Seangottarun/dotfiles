@@ -1,0 +1,50 @@
+" options and mappings that are supported by both Vim and IdeaVim
+set nu
+set relativenumber
+set history=500
+set number
+set hlsearch
+set ideajoin
+set ignorecase
+set smartcase
+set clipboard=unnamed
+
+" Searching
+" Set highlight search
+set hls
+" Set increment highlight matches
+set incsearch
+" Clears highlight of search when Enter.
+" remap enter after search to clear highlight, then clears command.
+nnoremap <silent> <cr> :noh<CR>
+
+" Map leader to backslash
+let mapleader="\"
+
+" IdeaVim Plugin Emulations
+Plug 'easymotion/vim-easymotion'
+Plug 'preservim/nerdtree'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-commentary'
+packadd matchit
+
+" Mappings
+" NerdTree
+nmap <c-f> :NERDTreeFind<CR>
+nmap <c-n> :NERDTreeToggle<CR>
+
+" IntelliJ-specific Actions
+" -------------------------
+" Run :actionlist to get a list of these. mapleader isn't supported yet.
+" Look for a dismiss action for Ctrl-[
+
+nmap <leader><CR>  :action GotoAction<CR>
+nmap <leader>o     :action GotoFile<CR>
+nmap <leader><C-o> :action RecentFiles<CR>
+nmap <leader>f     :action FileStructurePopup<CR>
+nmap <leader><C-f> :action GotoSymbol<CR>
+
+" More like quick definition -- shows source in pop-up
+nnoremap gD :action QuickImplementations<CR>
+nnoremap gr :action Refactorings.QuickListPopupAction<CR>
+
