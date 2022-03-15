@@ -23,6 +23,10 @@ export MANPAGER="env MAN_PN=1 vim -M +MANPAGER -"
 # for cppman, use cppman -c system
 # export PAGER='nvim +Man!'
 
+function dirdiff() {
+    vim -c "DirDiff $1 $2"
+}
+
 # append to the history file, don't overwrite it
 shopt -s histappend
 
