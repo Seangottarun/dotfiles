@@ -205,9 +205,13 @@ call plug#end()
 " Without it, <c-f> didn't seem to work.
 nmap <c-f> :NERDTreeFind<CR>
 nmap <c-n> :NERDTreeToggle<CR>
+ " put this in your .vimrc
+set wildignore+=*.pyc,*.o,*.obj,*.svn,*.swp,*.class,*.hg,*.DS_Store,*.min.*,*.bak
+
+ " Nerdtree config for wildignore
+let NERDTreeRespectWildIgnore=1
 " Change CWD whenever tree root is changed
 " let NERDTreeChDirMode=2
-let NERDTreeIgnore = ['\.bak$']
 
 """ Vim-latex
 "let g:Tex_CompileRule_pdf = 'pdflatex -synctex=1 --interaction=batchmode $*'
@@ -485,8 +489,8 @@ set spell
 inoremap <C-l> <c-g>u<Esc>[s1z=`]a<c-g>u
 
 " Set word wrapping: prevent words from splitting off a line
-set wrap
-set textwidth=80
+" set wrap
+" set textwidth=80
 
 """ File Encoding
 set encoding=utf-8
