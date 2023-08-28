@@ -48,3 +48,5 @@ nmap <leader><C-f> :action GotoSymbol<CR>
 nnoremap gD :action QuickImplementations<CR>
 nnoremap gr :action Refactorings.QuickListPopupAction<CR>
 
+set visualbell
+set noerrorbells
