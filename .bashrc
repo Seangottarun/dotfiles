@@ -1,31 +1,4 @@
-################################################################################
-# Global settings
-################################################################################
-
-################################################################################
-# Use vim where possible
-################################################################################
-# vi-mode in bash
-# Supports ^,$,b,e,w,d,y,p
-# Enter with <Esc>, v to edit cmd in vim (:wq to run edited cmd)
-set -o vi
-
-export EDITOR=vim
-# export EDITOR=nvim
-
-# Use vim as pager
-export MANPAGER="env MAN_PN=1 vim -M +MANPAGER -"
-# export MANPAGER="nvim -c 'set ft=man' -"
-# export PAGER="nvim -R"
-
-# Working for nvim
-# export MANPAGER='nvim +Man!'
-# for cppman, use cppman -c system
-# export PAGER='nvim +Man!'
-
-function dirdiff() {
-    vim -c "DirDiff $1 $2"
-}
+source ~/.commonrc
 
 # append to the history file, don't overwrite it
 shopt -s histappend
@@ -69,29 +42,3 @@ export HISTTIMEFORMAT="%Y/%m/%d %H:%M:%S:   "
 export HISTSIZE=50000
 export HISTFILESIZE=50000
 
-################################################################################
-# Miscellaneous
-################################################################################
-# Make bash completion work with :: for cppman
-# This breaks tab completion for paths
-# export COMP_WORDBREAKS=" /\"\'><;|&("
-
-################################################################################
-# Aliases
-################################################################################
-alias ..="cd .."
-alias ...="cd ../.."
-alias ....="cd ../../.."
-alias .....="cd ../../../.."
-alias ......="cd ../../../../.."
-alias .......="cd ../../../../../.."
-
-alias ls="ls --color -a"
-
-# mkdir + cd
-function mcd() {
-    mkdir -p $*
-    cd $*
-    pwd
-}
-export -f mcd
