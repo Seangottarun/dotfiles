@@ -43,7 +43,8 @@ BASE16_SHELL="$HOME/.config/base16-shell/"
         zstyle ':vcs_info:*' enable git
 
 # Styling for Command Prompt
-export PROMPT="%(?.%F{green}√.%F{red}?%?)%f %n@%m %F{cyan}%1~%f %# "
+# https://zsh.sourceforge.io/Doc/Release/Prompt-Expansion.html#Special-characters
+export PROMPT="%(?.%F{green}√.%F{red}?%?)%f %n@%m %F{cyan}%~%f %# "
 
 # # Configure fzf fuzzy searching
 # [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
