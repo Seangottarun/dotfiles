@@ -2,7 +2,10 @@
 
 cp .commonrc ~/.commonrc
 cp .bashrc ~/.bashrc_personal
-echo '\nsource ~/.bashrc_personal' >> ~/.bashrc
+# Manually append a blank line
+# NB: Using \n with echo adds a literal \n instead of line break
+echo '' >> ~/.bashrc
+echo 'source ~/.bashrc_personal' >> ~/.bashrc
 
 cp .pythonrc ~/.pythonrc
 cp .ripgreprc ~/.ripgreprc
